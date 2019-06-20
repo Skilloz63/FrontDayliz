@@ -17,7 +17,6 @@ export class CompaniesBackendComponent implements OnInit {
   pageActuel: number = 1;
   
 
-
   ngOnInit() {
     this.getConpanies();
   }
@@ -25,10 +24,16 @@ export class CompaniesBackendComponent implements OnInit {
   getConpanies(): void {
     this.companiesBackendService.getCompanies().subscribe(companies => this.companies = companies)
   }
+
   
   delete(company: CompaniesB): void {
-    this.companies = this.companies.filter(c => c !== company);
-    this.companiesBackendService.deleteCompany(company).subscribe();
+    if(confirm('Etes-vous sûr de vouloir éteindre tous vos appareils ?')) {
+      this.companies = this.companies.filter(c => c !== company);
+      this.companiesBackendService.deleteCompany(company).subscribe();
+    } else {
+      return null;
+    }
+    
   }
 
   add(name: string, logo: string): void {
